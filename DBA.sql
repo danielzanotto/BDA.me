@@ -14,7 +14,7 @@ DROP DATABASE nome_do_banco_de_dados; -- Exclui o banco de dados.
 -- Criação de tabela:
 CREATE TABLE nome_da_tabela -- Cria uma tabela. Obs: Necessita de um atributo. Normalmente se utiliza uma pk (chave primaira como atributo)
 ( PK_CHAVE INT PRIMARY KEY   -- Mas não necessáriamente precisa-se sempre utilizar ela como o atributo, podemos utilizar outros e depois adicionar a pk.
-);
+);				-- Poderia utilizar outra variavel sem ser pk, mas é importante ter ciencia que toda tabela deve possuir uma pk, exemplo abaixo sem pk
 
 -- Criação de tabela sem pk:
 CREATE TABLE tabela_inicialmente_sem_pk
@@ -54,8 +54,9 @@ id INT -- Aqui temos um exemplo de atributos. Em uma tabela podemos ter atributo
 );
 
 ALTER TABLE TABELA_VAZIA
-ADD CONSTRAINT pk_id PRIMARY KEY (id);
--- Uma tabela vazia outra forma de interpretar seria: Uma tabela sem dados. E esse dados podem ser depois depois inseridos com o inset
+ADD CONSTRAINT pk_id PRIMARY KEY (id); -- Adicionou pk_ em tabela vazia
+-- CONSTRAINT: Serve para nomear as chave primarias e estrangeira.
+-- Uma tabela vazia outra forma de interpretar seria: Uma tabela sem dados. E esse dados podem ser depois inseridos com o insert
 
 create table TABELA_COM_CINCO_ELEMENTOS(
 CHAVE_PRIMAIRA INT PRIMARY KEY, -- Chave primaria.
@@ -67,7 +68,43 @@ ESTADO CHAR(2)	   -- para caracter, com no maximo 2 elementos e se escrever 1 el
 -- Observação Lembrete: A virgula para no penultimo elemento da tabela :)
 
 
+
+
+--Nomeando uma primary key: 
+CREATE TABLE TABELA_COM_CHAVE_PRIMARIA_NOMEADA(
+	atributo int not null, -- escolhemos a chave primaria do tipo int e informamos que ela deve ser obrigatoria (not null/ Não deve está vazia)
+	contraint chave_primaria primary key (atributo) -- atribuimos a variavel chave_primaria o valor do atributo
+);
+
+
+
 -- Inserindo dados em uma tabela:
 INSERT INTO TABELA_COM_CINCO_ELEMENTOS (CHAVE_PRIMAIRA, Descricao, NUMERO_INTEIRO, NOME,ESTADO) VALUES
 (10, 'Tabela com cinco elementos', '88', 'Daniel', 'SP');
+
+
+drop database banco_de_dados;   -- apagar banco de dados 
+create database banco_de_dados; -- criar banco de dados
+use banco_de_dados;		-- usar banco de dados
+create table tabela_com_atributo( -- criar tabela
+atributo_selecionado int not null, -- atributo unico, ao menos 1 é obrigatorio, tipo int, not null (obrigatorio)
+constraint chave_primaria primary key (atributo_selecionado) -- variavel destinada a ser a chave primaria da tabela
+);
+
+insert into tabela_com_atributo value (1);	-- criar e adiciona um valor uma chave primaria
+insert into tabela_com_atributo value (12341);	-- o mesmo
+select*from tabela_com_atributo;	--visualiza a tabela 
+
+create table tabela_1( -- cria uma nova tabela
+nomes varchar(30)	--criar uma variavel do tipo texto com 30 characteres limites
+);
+
+insert into tabela_1 (nomes) values ('felipe'),('maria'),('joana'); -- insere o valor no atributo da tabela
+-- composição do insert: insert into -> nome da tabela -> (coluna) -> values -> (valor deseja), + caso queia adicionar mais -> e ;
+select * from tabela_1; -- visualiza a tabela
+
+alter table tabela_1 -- adicionando mais uma coluna a nossa tabela, coluna na horizontal
+add column janela int default 3; -- adicione uma coluna chamada janela e atribui o valor padrão = 3
+
+select * from tabela_1; -- visualiza a tabela após a adição da coluna e do valor
 
